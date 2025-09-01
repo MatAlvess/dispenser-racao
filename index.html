@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dispenser de Ração</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+    input { margin: 10px; padding: 5px; }
+    button { padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+    p { font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>Configurar Dispenser de Ração</h1>
+  <p>Conecte-se à rede WiFi <b>DispenserRacao</b> (senha: senha123), então clique abaixo.</p>
+  <button onclick="window.location.href='http://192.168.4.1'">Configurar Horários</button>
+  <p>Adicione este site à tela inicial para usá-lo como app.</p>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+    }
+  </script>
+</body>
+</html>
