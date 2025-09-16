@@ -1,15 +1,27 @@
+const CACHE_NAME = 'dispenser-v1'; // Pode manter v1 se preferir
+const urlsToCache = [
+  '/',
+  'index.html',
+  'manifest.json',
+  'icon-192.png',
+  'icon-512.png'
+];
+
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open('dispenser-v1').then(cache => {
-      return cache.addAll(['index.html', 'manifest.json']);
-    })
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('Cache aberto');
+        return cache.addAll(urlsToCache);
+      })
   );
 });
 
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
+    caches.match(event.request)
+      .then(response => {
+        return response || fetch(event.request);
+      })
   );
 });
