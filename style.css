@@ -1,0 +1,317 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  --primary-color: #1485e2;
+  --primary-hover: #0f6bb8;
+  --primary-light: #e3f2fd;
+  --secondary-color: #2c2c2c;
+  --background-dark: #1a1a1a;
+  --surface-color: #2d2d2d;
+  --surface-light: #3a3a3a;
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  --text-muted: #888888;
+  --success-color: #4caf50;
+  --error-color: #f44336;
+  --warning-color: #ff9800;
+  --border-radius: 12px;
+  --border-radius-small: 8px;
+  --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.15);
+  --shadow-heavy: 0 8px 32px rgba(0, 0, 0, 0.2);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, var(--background-dark) 0%, var(--secondary-color) 100%);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+  position: relative;
+  overflow-x: hidden;
+}
+.animacao-fundo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(20, 133, 226, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(20, 133, 226, 0.05) 0%, transparent 50%);
+  animation: float 20s ease-in-out infinite;
+  z-index: -1;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(1deg); }
+}
+.container {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: var(--transition);
+}
+.container.loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+.cabecalho {
+  text-align: center;
+  margin-bottom: 8px;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+.dispenser-icon {
+  width: 32px;
+  height: 32px;
+  color: white;
+}
+.cabecalho h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.bloco-conexacao {
+  margin-bottom: 8px;
+}
+.card-conexao {
+  background: var(--surface-color);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  box-shadow: var(--shadow-light);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: var(--transition);
+}
+.card-conexao:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+.card-conexao h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+.card-conexao p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.wifi-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.wifi-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: var(--surface-light);
+  border-radius: var(--border-radius-small);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.wifi-item .label {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.wifi-item .value {
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+  background: rgba(20, 133, 226, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.controle-secao {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.button-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  color: var(--text-primary);
+  text-decoration: none;
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: var(--shadow-light);
+  transition: var(--transition);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.button-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+.button-link:hover::before {
+  left: 100%;
+}
+.button-link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+.button-link:active {
+  transform: translateY(0);
+}
+.status-secao {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.status-mensagemy {
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  padding: 12px 16px;
+  border-radius: var(--border-radius-small);
+  transition: var(--transition);
+  min-height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.status-mensagem.loading {
+  background: rgba(255, 152, 0, 0.1);
+  color: var(--warning-color);
+  border: 1px solid rgba(255, 152, 0, 0.2);
+}
+.status-mensagem.success {
+  background: rgba(76, 175, 80, 0.1);
+  color: var(--success-color);
+  border: 1px solid rgba(76, 175, 80, 0.2);
+}
+.status-mensagem.error {
+  background: rgba(244, 67, 54, 0.1);
+  color: var(--error-color);
+  border: 1px solid rgba(244, 67, 54, 0.2);
+}
+.rodape {
+  margin-top: auto;
+  padding-top: 16px;
+}
+.pwa-hint {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.pwa-hint p {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.4;
+  text-align: center;
+}
+@media (max-width: 480px) {
+  .container {
+    padding: 16px;
+    gap: 20px;
+  }
+  
+  .cabecalho h1 {
+    font-size: 24px;
+  }
+  
+  .card-conexao {
+    padding: 16px;
+  }
+  
+  .button-link {
+    padding: 14px 20px;
+    font-size: 15px;
+  }
+  
+  .wifi-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .wifi-item .value {
+    align-self: stretch;
+    text-align: center;
+  }
+}
+@media (max-width: 360px) {
+  .container {
+    padding: 12px;
+  }
+  
+  .cabecalho h1 {
+    font-size: 22px;
+  }
+  
+  .pwa-hint {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+}
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.card-conexao,
+.button-link,
+.pwa-hint {
+  animation: slideInUp 0.6s ease-out forwards;
+}
+.card-conexao {
+  animation-delay: 0.1s;
+}
+.button-link {
+  animation-delay: 0.2s;
+}
+.pwa-hint {
+  animation-delay: 0.3s;
+}
+.button-link:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

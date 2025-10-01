@@ -5,53 +5,71 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dispenser de Ração</title>
   <link rel="manifest" href="manifest.json">
-  <style>
-    body { font-family: Arial, sans-serif; text-align: center; margin: 20px; background-color: #f4f4f4; }
-    .container { max-width: 400px; margin: auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-    button { 
-      padding: 15px; background: #4CAF50; color: white; border: none; cursor: pointer; 
-      width: 100%; margin-top: 15px; font-size: 16px; border-radius: 5px;
-    }
-    #btn-alimentar { background-color: #008CBA; }
-    p { font-size: 14px; }
-    #status { margin-top: 20px; font-weight: bold; min-height: 20px; }
-    .button-link {
-        display: block; box-sizing: border-box; padding: 15px; background: #4CAF50; color: white !important; 
-        text-decoration: none; width: 100%; margin-top: 15px; font-size: 16px; border-radius: 5px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="animacao-fundo"></div>
   <div class="container">
-    <h1>Controle do Dispenser</h1>
-    <p>Conecte-se à rede WiFi <b>DispenserRacao</b> (senha: senha123) antes de usar os botões.</p>
-    
-    <a href="http://192.168.4.1" target="_blank" rel="noopener noreferrer" class="button-link">Configurar Horários</a>
-    
-    <button id="btn-alimentar" onclick="alimentarAgora()">Alimentar Agora</button>
-
-    <p id="status"></p> <br>
-    <p style="color: #555;">Adicione este site à tela inicial para usá-lo como um app.</p>
+    <div class="cabecalho">
+      <h1>Controle do Dispenser</h1>
+    </div>
+    <div class="bloco-conexacao">
+      <div class="card-conexao">
+        <h3>Configuração de Conexão</h3>
+        <p>Conecte-se à rede WiFi antes de usar os controles:</p>
+        <div class="wifi-details">
+          <div class="wifi-item">
+            <span class="label">Rede:</span>
+            <span class="value">DispenserRacao</span>
+          </div>
+          <div class="wifi-item">
+            <span class="label">Senha:</span>
+            <span class="value">senha123</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="controle-secao">
+      <a href="http://192.168.4.1" target="_blank" rel="noopener noreferrer" class="button-link primary">
+        Configurar Horários
+      </a>
+      <div class="status-secao">
+        <p id="status" class="status-mensagem"></p>
+      </div>
+    </div>
+    <div class="rodape">
+      <div class="pwa-hint">
+        <p>Adicione este site à tela inicial para usá-lo como um aplicativo</p>
+      </div>
+    </div>
   </div>
-
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js');
     }
     const statusEl = document.getElementById('status');
-
     function alimentarAgora() {
       statusEl.textContent = 'Enviando comando...';
+      statusEl.className = 'status-mensagem loading';
       fetch('http://192.168.4.1/alimentar', { mode: 'no-cors' })
         .then(() => {
           statusEl.textContent = 'Comando enviado com sucesso!';
-          setTimeout(() => { statusEl.textContent = ''; }, 3000);
+          statusEl.className = 'status-mensagem success';
+          setTimeout(() => { 
+            statusEl.textContent = ''; 
+            statusEl.className = 'status-mensagem';
+          }, 3000);
         })
         .catch(error => {
           console.error('Erro:', error);
           statusEl.textContent = 'Falha ao comunicar com o dispenser. Verifique a conexão WiFi.';
+          statusEl.className = 'status-mensagem error';
         });
     }
+    document.addEventListener('DOMContentLoaded', function() {
+      const container = document.querySelector('.container');
+      container.classList.add('loaded');
+    });
   </script>
 </body>
 </html>
